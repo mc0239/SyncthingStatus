@@ -17,6 +17,8 @@ namespace SyncthingStatus
         private ContextMenuStrip trayMenu;
         private SettingsForm settingsForm;
 
+        private Timer timer;
+
         private ToolStripMenuItem trayMenuItemAbout;
         private ToolStripSeparator trayMenuSeparator1;
         private ToolStripMenuItem trayMenuItemOpen;
@@ -26,12 +28,7 @@ namespace SyncthingStatus
         public TrayIconContainer()
         {
             InitializeComponents();
-            yeet();
-        }
-
-        private async void yeet()
-        {
-            Console.WriteLine("Current status is:" + await ApiClient.ping());    
+            StartTimer();
         }
 
         private void InitializeComponents()
@@ -70,6 +67,34 @@ namespace SyncthingStatus
             trayIcon.DoubleClick += TrayMenuItemOpenClickHandler;
 
             settingsForm = new SettingsForm();
+        }
+
+        private void StartTimer()
+        {
+            timer = new Timer();
+            timer.Interval = 1000 * 10;
+            timer.Tick += async (object sender, EventArgs e) =>
+            {
+                var ping = await ApiClient.Ping();
+                if (ping == null)
+                {
+                    trayIcon.Icon = Properties.Resources.iconNotify;
+                    trayIcon.Text = "Syncthing: No response";
+                    return;
+                }
+
+                var errors = await ApiClient.Error();
+                if (errors != null && errors.Length > 0)
+                {
+                    trayIcon.Icon = Properties.Resources.iconNotify;
+                    trayIcon.Text = "Syncthing: Reported errors.";
+                    return;
+                }
+                    
+                trayIcon.Icon = Properties.Resources.iconDefault;
+                trayIcon.Text = "Syncthing: OK";
+            };
+            timer.Start();
         }
 
         private void TrayMenuItemOpenClickHandler(object sender, EventArgs e)
