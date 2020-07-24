@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Net.Http;
@@ -28,7 +29,7 @@ namespace SyncthingStatus
             yeet();
         }
 
-        async void yeet()
+        private async void yeet()
         {
             Console.WriteLine("Current status is:" + await ApiClient.ping());    
         }
@@ -73,7 +74,7 @@ namespace SyncthingStatus
 
         private void TrayMenuItemOpenClickHandler(object sender, EventArgs e)
         {
-            System.Diagnostics.Process.Start("http://localhost:8384");
+            Util.OpenUrl("http://localhost:8384");
         }
 
         private void TrayMenuItemSettingsClickHandler(object sender, EventArgs e)

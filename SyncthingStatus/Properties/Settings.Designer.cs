@@ -34,5 +34,29 @@ namespace SyncthingStatus.Properties {
                 this["ApiKey"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("http://localhost:8384/")]
+        public string StAddress {
+            get {
+                return ((string)(this["StAddress"]));
+            }
+            set {
+                this["StAddress"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool UsingCustomStAddress {
+            get {
+                return ((bool)(this["UsingCustomStAddress"]));
+            }
+            set {
+                this["UsingCustomStAddress"] = value;
+            }
+        }
     }
 }
