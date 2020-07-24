@@ -1,30 +1,34 @@
 # Setup
 
-Here's a short guide on how I set-up Syncthing on my Windows machines.
+Here follows a short guide on how I set-up Syncthing & SyncthingStatus on my Windows machines.
 
 ## Setting up Syncthing
 
-Download "Base Syncthing": https://syncthing.net/downloads/ and put it somewhere you won't (re)move it later on.
+Download "Base Syncthing" from [Syncthing's downloads page](https://syncthing.net/downloads/). Store downloaded binary somewhere you won't (re)move it later on (For example, `D:\Programs\Syncthing`).
 
-Then follow the guide on "Starting Syncthing Automatically", section "Using startup folder":
+Then, make sure that Syncthing runs on Windows startup. Syncthing docs have an [article that describes a few different approaches](https://docs.syncthing.net/users/autostart.html#run-at-user-log-on-using-the-startup-folder) how to set this up.
 
-https://docs.syncthing.net/users/autostart.html#run-at-user-log-on-using-the-startup-folder
+I prefer to do it with the Startup folder:
 
-Congratulations, Syncthing will run on next user logon.
+1. Open up the *Run...* window (Win + R)
+2. Type in `shell:startup` and click OK. <br> ![](https://raw.githubusercontent.com/mc0239/SyncthingStatus/master/img/run_shell_startup.png)
+3. An Explorer window will pop up with the Startup folder. Here, do the *Right click* > *New* > *Shortcut*.
+4. When prompted for the location of the item, browse and select `Syncthing.exe`. Before clicking *Next*, add `-no-console -no-browser` to the end (this will make Syncthing run in background, without console window or opening the browser). <br> ![](https://raw.githubusercontent.com/mc0239/SyncthingStatus/master/img/add_shortcut_1.png)
+5. Complete the shortcut creation process. Congrats, Syncthing will now automatically run when you log in.
 
 ## Setting up SyncthingStatus
 
-Download latest release exe from GitHub releases:
+Download latest release executable from [GitHub releases](https://github.com/mc0239/SyncthingStatus/releases) (look under Assets).
 
-https://github.com/mc0239/SyncthingStatus/releases
+On first run, you might be prompted by Windows that you need to install .Net Core. Click Yes. A website with download options will pop up.
 
-Just like you did it for the Base Syncthing, put the exe file somewhere (I just put it into the same folder next to Syncthing).
+![](https://raw.githubusercontent.com/mc0239/SyncthingStatus/master/img/net_core_prompt.png)
 
-Note: SyncthingStatus requires .NET Core. Upon first run, you might get a prompt to install it.
+On the webpage, look under the *Desktop Runtime* section and download the installer. Run the installer and let it do it's thing.
 
-Just like for Syncthing, also create a shortcut in startup folder.
+![](https://raw.githubusercontent.com/mc0239/SyncthingStatus/master/img/net_core_download.png).
 
-Congratulations, SyncthingStatus will run on next user logon.
+The steps to make SyncthingStatus run on startup are practically the same as for the Syncthing itself (create a shortcut in the Startup folder, see instructions above).
 
-Once running the SyncthingStatus, don't forget to setup the API Key for it to work properly.
+Once SyncthingStatus is running, don't forget to setup the API Key in settings so it can connect to Syncthing successfuly.
 
