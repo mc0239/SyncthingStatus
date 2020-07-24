@@ -1,79 +1,79 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Net.Http;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace SyncthingStatus
 {
-    class TrayIconContainer
+    class TrayIconContainer : IDisposable
     {
         private NotifyIcon trayIcon;
         private ContextMenuStrip trayMenu;
-        private SettingsForm settingsForm;
-
-        private Timer timer;
-
+        
+        private ToolStripItem[] trayMenuItems;
         private ToolStripMenuItem trayMenuItemAbout;
-        private ToolStripSeparator trayMenuSeparator1;
         private ToolStripMenuItem trayMenuItemOpen;
         private ToolStripMenuItem trayMenuItemSettings;
         private ToolStripMenuItem trayMenuItemExit;
 
+        private SettingsForm settingsForm;
+        private Timer requestTimer;
+
         public TrayIconContainer()
         {
             InitializeComponents();
-            StartTimer();
         }
 
         private void InitializeComponents()
         {
-            trayMenuItemAbout = new ToolStripMenuItem();
-            trayMenuItemAbout.Text = Util.GetAboutString();
-            trayMenuItemAbout.Enabled = false;
-
-            trayMenuSeparator1 = new ToolStripSeparator();
-
-            trayMenuItemOpen = new ToolStripMenuItem();
-            trayMenuItemOpen.Text = "Open in browser";
-            trayMenuItemOpen.Click += TrayMenuItemOpenClickHandler;
-
-            trayMenuItemSettings = new ToolStripMenuItem();
-            trayMenuItemSettings.Text = "Settings";
-            trayMenuItemSettings.Click += TrayMenuItemSettingsClickHandler;
-
-            trayMenuItemExit = new ToolStripMenuItem();
-            trayMenuItemExit.Text = "Exit";
-            trayMenuItemExit.Click += TrayMenuItemExitClickHandler;
-
-            trayMenu = new ContextMenuStrip();
-            trayMenu.ShowImageMargin = false;
-
-            trayMenu.Items.Add(trayMenuItemAbout);
-            trayMenu.Items.Add(trayMenuSeparator1);
-            trayMenu.Items.Add(trayMenuItemOpen);
-            trayMenu.Items.Add(trayMenuItemSettings);
-            trayMenu.Items.Add(trayMenuItemExit);
-
-            trayIcon = new NotifyIcon();
-            trayIcon.Icon = Properties.Resources.iconDefault;
-            trayIcon.Visible = true;
-            trayIcon.ContextMenuStrip = trayMenu;
-            trayIcon.DoubleClick += TrayMenuItemOpenClickHandler;
-
+            InitializeTrayMenu();
+            InitializeTrayIcon();
+            InitializeRequestTimer();
             settingsForm = new SettingsForm();
         }
 
-        private void StartTimer()
+        private void InitializeTrayMenu()
         {
-            timer = new Timer();
-            timer.Interval = 1000 * 10;
-            timer.Tick += async (object sender, EventArgs e) =>
+            trayMenuItemAbout = new ToolStripMenuItem(Util.GetAboutString()) { Enabled = false };
+            trayMenuItemOpen = new ToolStripMenuItem("Open in browser", null, TrayMenuItemOpenClickHandler);
+            trayMenuItemSettings = new ToolStripMenuItem("Settings", null, TrayMenuItemSettingsClickHandler);
+            trayMenuItemExit = new ToolStripMenuItem("Exit", null, TrayMenuItemExitClickHandler);
+
+            trayMenuItems = new ToolStripItem[] 
+            {
+                trayMenuItemAbout, new ToolStripSeparator(), trayMenuItemOpen, trayMenuItemSettings, trayMenuItemExit
+            };
+
+            trayMenu = new ContextMenuStrip() { ShowImageMargin = false };
+            trayMenu.Items.AddRange(trayMenuItems);
+        }
+
+        private void InitializeTrayIcon()
+        {
+            trayIcon = new NotifyIcon
+            {
+                Icon = Properties.Resources.iconDefault,
+                Visible = true,
+                ContextMenuStrip = trayMenu
+            };
+            trayIcon.DoubleClick += TrayMenuItemOpenClickHandler;
+        }
+
+        public void Dispose()
+        {
+            foreach(ToolStripItem i in trayMenuItems)
+            {
+                i.Dispose();
+            }
+            trayMenu.Dispose();
+            trayIcon.Dispose();
+            timer.Dispose();
+            settingsForm.Dispose();
+        }
+
+        private void InitializeRequestTimer()
+        {
+            requestTimer = new Timer();
+            requestTimer.Interval = 1000 * 10;
+            requestTimer.Tick += async (object sender, EventArgs e) =>
             {
                 var ping = await ApiClient.Ping();
                 if (ping == null)
@@ -90,16 +90,16 @@ namespace SyncthingStatus
                     trayIcon.Text = "Syncthing: Reported errors.";
                     return;
                 }
-                    
+
                 trayIcon.Icon = Properties.Resources.iconDefault;
                 trayIcon.Text = "Syncthing: OK";
             };
-            timer.Start();
+            requestTimer.Start();
         }
 
         private void TrayMenuItemOpenClickHandler(object sender, EventArgs e)
         {
-            Util.OpenUrl("http://localhost:8384");
+            Util.OpenUrl(Util.GetSyncthingAddress());
         }
 
         private void TrayMenuItemSettingsClickHandler(object sender, EventArgs e)
@@ -118,5 +118,6 @@ namespace SyncthingStatus
             trayIcon.Visible = false;
             Application.Exit();
         }
+
     }
 }

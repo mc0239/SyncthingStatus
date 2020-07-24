@@ -34,7 +34,6 @@
             this.buttonSave = new System.Windows.Forms.Button();
             this.labelVersion = new System.Windows.Forms.Label();
             this.linkLabelHomepage = new System.Windows.Forms.LinkLabel();
-            this.label2 = new System.Windows.Forms.Label();
             this.checkBoxAddress = new System.Windows.Forms.CheckBox();
             this.textBoxAddress = new System.Windows.Forms.TextBox();
             this.SuspendLayout();
@@ -64,7 +63,7 @@
             // buttonSave
             // 
             this.buttonSave.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.buttonSave.Location = new System.Drawing.Point(285, 186);
+            this.buttonSave.Location = new System.Drawing.Point(285, 160);
             this.buttonSave.Name = "buttonSave";
             this.buttonSave.Size = new System.Drawing.Size(150, 32);
             this.buttonSave.TabIndex = 2;
@@ -76,7 +75,7 @@
             // 
             this.labelVersion.AutoSize = true;
             this.labelVersion.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.labelVersion.Location = new System.Drawing.Point(12, 266);
+            this.labelVersion.Location = new System.Drawing.Point(12, 216);
             this.labelVersion.Name = "labelVersion";
             this.labelVersion.Size = new System.Drawing.Size(166, 25);
             this.labelVersion.TabIndex = 3;
@@ -86,7 +85,7 @@
             // 
             this.linkLabelHomepage.AutoSize = true;
             this.linkLabelHomepage.Font = new System.Drawing.Font("Segoe UI", 10.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.linkLabelHomepage.Location = new System.Drawing.Point(65, 291);
+            this.linkLabelHomepage.Location = new System.Drawing.Point(184, 216);
             this.linkLabelHomepage.Name = "linkLabelHomepage";
             this.linkLabelHomepage.Size = new System.Drawing.Size(113, 25);
             this.linkLabelHomepage.TabIndex = 4;
@@ -94,26 +93,16 @@
             this.linkLabelHomepage.Text = "GitHub page";
             this.linkLabelHomepage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelHomepage_LinkClicked);
             // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label2.Location = new System.Drawing.Point(12, 85);
-            this.label2.Margin = new System.Windows.Forms.Padding(3, 6, 3, 0);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(150, 23);
-            this.label2.TabIndex = 0;
-            this.label2.Text = "Syncthing Address";
-            // 
             // checkBoxAddress
             // 
             this.checkBoxAddress.AutoSize = true;
             this.checkBoxAddress.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.checkBoxAddress.Location = new System.Drawing.Point(12, 111);
+            this.checkBoxAddress.Location = new System.Drawing.Point(12, 85);
+            this.checkBoxAddress.Margin = new System.Windows.Forms.Padding(3, 6, 3, 3);
             this.checkBoxAddress.Name = "checkBoxAddress";
-            this.checkBoxAddress.Size = new System.Drawing.Size(279, 27);
+            this.checkBoxAddress.Size = new System.Drawing.Size(234, 27);
             this.checkBoxAddress.TabIndex = 5;
-            this.checkBoxAddress.Text = "Using custom Syncthing address";
+            this.checkBoxAddress.Text = "Custom Syncthing address";
             this.checkBoxAddress.UseVisualStyleBackColor = true;
             this.checkBoxAddress.CheckedChanged += new System.EventHandler(this.checkBoxAddress_CheckedChanged);
             // 
@@ -121,7 +110,7 @@
             // 
             this.textBoxAddress.Enabled = false;
             this.textBoxAddress.Font = new System.Drawing.Font("Segoe UI", 10.2F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.textBoxAddress.Location = new System.Drawing.Point(12, 144);
+            this.textBoxAddress.Location = new System.Drawing.Point(12, 118);
             this.textBoxAddress.Margin = new System.Windows.Forms.Padding(3, 3, 3, 9);
             this.textBoxAddress.MaxLength = 40;
             this.textBoxAddress.Name = "textBoxAddress";
@@ -134,10 +123,9 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.ControlLightLight;
-            this.ClientSize = new System.Drawing.Size(447, 325);
+            this.ClientSize = new System.Drawing.Size(447, 250);
             this.Controls.Add(this.textBoxAddress);
             this.Controls.Add(this.checkBoxAddress);
-            this.Controls.Add(this.label2);
             this.Controls.Add(this.linkLabelHomepage);
             this.Controls.Add(this.labelVersion);
             this.Controls.Add(this.buttonSave);
@@ -162,7 +150,6 @@
         private System.Windows.Forms.Button buttonSave;
         private System.Windows.Forms.Label labelVersion;
         private System.Windows.Forms.LinkLabel linkLabelHomepage;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.CheckBox checkBoxAddress;
         private System.Windows.Forms.TextBox textBoxAddress;
     }
