@@ -5,7 +5,7 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
     <UseWindowsForms>true</UseWindowsForms>
     <ApplicationIcon>Resources\think.ico</ApplicationIcon>
-    <Version>0.1</Version>
+    <Version>0.2</Version>
     <PackageProjectUrl></PackageProjectUrl>
   </PropertyGroup>
 

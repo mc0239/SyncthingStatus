@@ -58,7 +58,7 @@
             this.textBoxApiKey.Name = "textBoxApiKey";
             this.textBoxApiKey.Size = new System.Drawing.Size(423, 29);
             this.textBoxApiKey.TabIndex = 1;
-            this.textBoxApiKey.Enter += new System.EventHandler(this.textBoxApiKey_Enter);
+            this.textBoxApiKey.Enter += new System.EventHandler(this.TextBoxApiKey_Enter);
             // 
             // buttonSave
             // 
@@ -69,7 +69,7 @@
             this.buttonSave.TabIndex = 2;
             this.buttonSave.Text = "Save settings";
             this.buttonSave.UseVisualStyleBackColor = true;
-            this.buttonSave.Click += new System.EventHandler(this.buttonSave_Click);
+            this.buttonSave.Click += new System.EventHandler(this.ButtonSave_Click);
             // 
             // labelVersion
             // 
@@ -91,7 +91,7 @@
             this.linkLabelHomepage.TabIndex = 4;
             this.linkLabelHomepage.TabStop = true;
             this.linkLabelHomepage.Text = "GitHub page";
-            this.linkLabelHomepage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.linkLabelHomepage_LinkClicked);
+            this.linkLabelHomepage.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabelHomepage_LinkClicked);
             // 
             // checkBoxAddress
             // 
@@ -104,7 +104,7 @@
             this.checkBoxAddress.TabIndex = 5;
             this.checkBoxAddress.Text = "Custom Syncthing address";
             this.checkBoxAddress.UseVisualStyleBackColor = true;
-            this.checkBoxAddress.CheckedChanged += new System.EventHandler(this.checkBoxAddress_CheckedChanged);
+            this.checkBoxAddress.CheckedChanged += new System.EventHandler(this.CheckBoxAddress_CheckedChanged);
             // 
             // textBoxAddress
             // 
@@ -116,7 +116,7 @@
             this.textBoxAddress.Name = "textBoxAddress";
             this.textBoxAddress.Size = new System.Drawing.Size(423, 30);
             this.textBoxAddress.TabIndex = 1;
-            this.textBoxAddress.Enter += new System.EventHandler(this.textBoxApiKey_Enter);
+            this.textBoxAddress.Enter += new System.EventHandler(this.TextBoxApiKey_Enter);
             // 
             // SettingsForm
             // 
@@ -135,7 +135,6 @@
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "SettingsForm";
-            this.ShowInTaskbar = false;
             this.Text = "SyncthingStatus";
             this.Load += new System.EventHandler(this.SettingsForm_Load);
             this.ResumeLayout(false);

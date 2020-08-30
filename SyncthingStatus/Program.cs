@@ -14,6 +14,9 @@ namespace SyncthingStatus
             Application.SetHighDpiMode(HighDpiMode.SystemAware);
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+            
+            // TODO: settings migration between versions.
+            Properties.Settings.Default.Upgrade();
 
             ApiClient.Initialize();
             TrayIconContainer trayIconContainer = new TrayIconContainer();

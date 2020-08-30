@@ -10,12 +10,13 @@ namespace SyncthingStatus
         
         private ToolStripItem[] trayMenuItems;
         private ToolStripMenuItem trayMenuItemAbout;
+        private ToolStripMenuItem trayMenuItemAbout2;
         private ToolStripMenuItem trayMenuItemOpen;
         private ToolStripMenuItem trayMenuItemSettings;
         private ToolStripMenuItem trayMenuItemExit;
 
         private SettingsForm settingsForm;
-        private Timer requestTimer;
+        private StatusChecker statusChecker;
 
         public TrayIconContainer()
         {
@@ -26,20 +27,22 @@ namespace SyncthingStatus
         {
             InitializeTrayMenu();
             InitializeTrayIcon();
-            InitializeRequestTimer();
-            settingsForm = new SettingsForm();
+
+            statusChecker = new StatusChecker(trayIcon, trayMenu);
+            settingsForm = new SettingsForm(statusChecker);
         }
 
         private void InitializeTrayMenu()
         {
             trayMenuItemAbout = new ToolStripMenuItem(Util.GetAboutString()) { Enabled = false };
+            trayMenuItemAbout2 = new ToolStripMenuItem("...") { Enabled = false };
             trayMenuItemOpen = new ToolStripMenuItem("Open in browser", null, TrayMenuItemOpenClickHandler);
             trayMenuItemSettings = new ToolStripMenuItem("Settings", null, TrayMenuItemSettingsClickHandler);
             trayMenuItemExit = new ToolStripMenuItem("Exit", null, TrayMenuItemExitClickHandler);
 
             trayMenuItems = new ToolStripItem[] 
             {
-                trayMenuItemAbout, new ToolStripSeparator(), trayMenuItemOpen, trayMenuItemSettings, trayMenuItemExit
+                trayMenuItemAbout, trayMenuItemAbout2, new ToolStripSeparator(), trayMenuItemOpen, trayMenuItemSettings, trayMenuItemExit
             };
 
             trayMenu = new ContextMenuStrip() { ShowImageMargin = false };
@@ -65,36 +68,9 @@ namespace SyncthingStatus
             }
             trayMenu.Dispose();
             trayIcon.Dispose();
-            timer.Dispose();
+
+            statusChecker.Dispose();
             settingsForm.Dispose();
-        }
-
-        private void InitializeRequestTimer()
-        {
-            requestTimer = new Timer();
-            requestTimer.Interval = 1000 * 10;
-            requestTimer.Tick += async (object sender, EventArgs e) =>
-            {
-                var ping = await ApiClient.Ping();
-                if (ping == null)
-                {
-                    trayIcon.Icon = Properties.Resources.iconNotify;
-                    trayIcon.Text = "Syncthing: No response";
-                    return;
-                }
-
-                var errors = await ApiClient.Error();
-                if (errors != null && errors.Length > 0)
-                {
-                    trayIcon.Icon = Properties.Resources.iconNotify;
-                    trayIcon.Text = "Syncthing: Reported errors.";
-                    return;
-                }
-
-                trayIcon.Icon = Properties.Resources.iconDefault;
-                trayIcon.Text = "Syncthing: OK";
-            };
-            requestTimer.Start();
         }
 
         private void TrayMenuItemOpenClickHandler(object sender, EventArgs e)
@@ -106,7 +82,7 @@ namespace SyncthingStatus
         {
             if (settingsForm.IsDisposed)
             {
-                settingsForm = new SettingsForm();
+                settingsForm = new SettingsForm(statusChecker);
             }
             settingsForm.Show();
         }

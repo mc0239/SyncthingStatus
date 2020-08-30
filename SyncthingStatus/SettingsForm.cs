@@ -6,12 +6,15 @@ namespace SyncthingStatus
 {
     public partial class SettingsForm : Form
     {
-        public SettingsForm()
+        private readonly StatusChecker statusChecker;
+
+        public SettingsForm(StatusChecker statusChecker)
         {
+            this.statusChecker = statusChecker;
             InitializeComponent();
         }
 
-        private void buttonSave_Click(object sender, EventArgs e)
+        private void ButtonSave_Click(object sender, EventArgs e)
         {
             Properties.Settings.Default.ApiKey = textBoxApiKey.Text;
             Properties.Settings.Default.UsingCustomStAddress = checkBoxAddress.Checked;
@@ -26,6 +29,9 @@ namespace SyncthingStatus
                     }));
                 }
             });
+
+            ApiClient.Initialize();
+            statusChecker.CheckNow();
         }
 
         private void SettingsForm_Load(object sender, EventArgs e)
@@ -36,22 +42,24 @@ namespace SyncthingStatus
 
             labelVersion.Text = Util.GetAboutString();
 
-            LinkLabel.Link link = new LinkLabel.Link();
-            link.LinkData = "https://github.com/mc0239/SyncthingStatus";
+            LinkLabel.Link link = new LinkLabel.Link
+            {
+                LinkData = "https://github.com/mc0239/SyncthingStatus"
+            };
             linkLabelHomepage.Links.Add(link);
         }
 
-        private void textBoxApiKey_Enter(object sender, EventArgs e)
+        private void TextBoxApiKey_Enter(object sender, EventArgs e)
         {
             textBoxApiKey.Select(0, 0);
         }
 
-        private void linkLabelHomepage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        private void LinkLabelHomepage_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
             Util.OpenUrl(e.Link.LinkData.ToString());
         }
 
-        private void checkBoxAddress_CheckedChanged(object sender, EventArgs e)
+        private void CheckBoxAddress_CheckedChanged(object sender, EventArgs e)
         {
             textBoxAddress.Enabled = checkBoxAddress.Checked;
         }
