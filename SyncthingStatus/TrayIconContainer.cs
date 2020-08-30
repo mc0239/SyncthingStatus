@@ -28,8 +28,16 @@ namespace SyncthingStatus
             InitializeTrayMenu();
             InitializeTrayIcon();
 
-            statusChecker = new StatusChecker(trayIcon, trayMenu);
-            settingsForm = new SettingsForm(statusChecker);
+            statusChecker = new StatusChecker
+            {
+                TrayIcon = trayIcon,
+                TrayMenuItemVersion = trayMenuItemAbout2
+            };
+
+            settingsForm = new SettingsForm
+            {
+                StatusChecker = statusChecker
+            };
         }
 
         private void InitializeTrayMenu()
@@ -53,7 +61,7 @@ namespace SyncthingStatus
         {
             trayIcon = new NotifyIcon
             {
-                Icon = Properties.Resources.iconDefault,
+                Icon = Properties.Resources.iconThink,
                 Visible = true,
                 ContextMenuStrip = trayMenu
             };
@@ -82,7 +90,10 @@ namespace SyncthingStatus
         {
             if (settingsForm.IsDisposed)
             {
-                settingsForm = new SettingsForm(statusChecker);
+                settingsForm = new SettingsForm
+                {
+                    StatusChecker = statusChecker
+                };
             }
             settingsForm.Show();
         }

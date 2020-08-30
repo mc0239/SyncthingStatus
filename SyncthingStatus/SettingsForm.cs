@@ -6,11 +6,10 @@ namespace SyncthingStatus
 {
     public partial class SettingsForm : Form
     {
-        private readonly StatusChecker statusChecker;
+        internal StatusChecker StatusChecker { get; set; }
 
-        public SettingsForm(StatusChecker statusChecker)
+        public SettingsForm()
         {
-            this.statusChecker = statusChecker;
             InitializeComponent();
         }
 
@@ -31,7 +30,12 @@ namespace SyncthingStatus
             });
 
             ApiClient.Initialize();
-            statusChecker.CheckNow();
+
+            if (StatusChecker != null)
+            {
+                StatusChecker.CheckAll();
+            }
+            
         }
 
         private void SettingsForm_Load(object sender, EventArgs e)

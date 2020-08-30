@@ -13,19 +13,19 @@ namespace SyncthingStatus
 
         internal static void Initialize()
         {
-            if (client == null)
+            if (client != null)
             {
-                client = new HttpClient
-                {
-                    BaseAddress = new System.Uri(Util.GetSyncthingAddress())
-                };
+                client.Dispose();
             }
-            System.Diagnostics.Debug.WriteLine("[HttpClient] API key: " + Properties.Settings.Default.ApiKey);
-            System.Diagnostics.Debug.WriteLine("[HttpClient] Address: " + Util.GetSyncthingAddress());
 
-            client.BaseAddress = new System.Uri(Util.GetSyncthingAddress());
-            client.DefaultRequestHeaders.Remove(X_API_KEY);
+            client = new HttpClient
+            {
+                BaseAddress = new System.Uri(Util.GetSyncthingAddress())
+            };
             client.DefaultRequestHeaders.Add(X_API_KEY, Properties.Settings.Default.ApiKey);
+
+            System.Diagnostics.Debug.WriteLine("[HttpClient] Address: " + Util.GetSyncthingAddress());
+            System.Diagnostics.Debug.WriteLine("[HttpClient] API key: " + Properties.Settings.Default.ApiKey);
         }
 
         internal static async Task<PingResponse> Ping()
