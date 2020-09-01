@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -6,6 +7,7 @@ namespace SyncthingStatus
 {
     public class StatusChecker : IDisposable
     {
+        private static readonly int INTERVAL_SHORT = 1000 / 2; // Half a second
         private static readonly int INTERVAL_LONG = 1000 * 5; // 5 seconds
 
         private Timer requestTimer;
@@ -22,60 +24,70 @@ namespace SyncthingStatus
         {
             requestTimer = new Timer
             {
-                Interval = INTERVAL_LONG
+                Interval = INTERVAL_SHORT
             };
-            requestTimer.Tick += (object sender, EventArgs e) => { CheckAll(); };
+            requestTimer.Tick += async (object sender, EventArgs e) => {
+                requestTimer.Stop();
+                
+                bool successfulCheck = await CheckAll(); 
+                requestTimer.Interval = successfulCheck ? INTERVAL_LONG : INTERVAL_SHORT;
+                
+                requestTimer.Start();
+            };
             requestTimer.Start();
         }
 
-        public void CheckAll()
+        public async Task<bool> CheckAll()
         {
-            System.Diagnostics.Debug.WriteLine("Checking status...");
-            CheckStatus().ConfigureAwait(false);
-            CheckVersion().ConfigureAwait(false);
-            System.Diagnostics.Debug.WriteLine("Check done.");
-        }
-
-        private async Task CheckStatus()
-        {
-            if (TrayIcon == null)
+            if (TrayIcon == null || TrayMenuItemVersion == null)
             {
-                requestTimer.Interval = INTERVAL_LONG;
-                return;
+                return false; // TODO handle this
             }
 
+            string status = await CheckStatus();
+            if (status == "OK")
+            {
+                TrayIcon.Icon = Properties.Resources.iconDefault;
+                TrayIcon.Text = "Syncthing: OK";
+            } else
+            {
+                TrayIcon.Icon = Properties.Resources.iconNotify;
+                TrayIcon.Text = status != null ? "Syncthing: " + status : null;
+            }
+
+            string version = await CheckVersion();
+            if (version != null)
+            {
+                TrayMenuItemVersion.Text = "Syncthing " + version;
+            } else
+            {
+                TrayMenuItemVersion.Text = "...";
+            }
+
+            return status == "OK" && version != null;
+        }
+
+        private async Task<string> CheckStatus()
+        {
             var ping = await ApiClient.Ping();
             if (ping == null)
             {
-                TrayIcon.Icon = Properties.Resources.iconNotify;
-                TrayIcon.Text = "Syncthing: No response";
-                return;
+                return "No response";
             }
 
             var errors = await ApiClient.Error();
-            if (errors != null && errors.Length > 0)
+            if (errors != null && errors?.Length > 0)
             {
-                TrayIcon.Icon = Properties.Resources.iconNotify;
-                TrayIcon.Text = "Syncthing: Reported errors";
-                return;
+                return "Reporting errors";
             }
 
-            TrayIcon.Icon = Properties.Resources.iconDefault;
-            TrayIcon.Text = "Syncthing: OK";
+            return "OK";
         }
 
-        private async Task CheckVersion()
+        private async Task<string> CheckVersion()
         {
-            if (TrayMenuItemVersion == null)
-            {
-                return;
-            }
-
             var version = await ApiClient.Version();
-            if (version != null)
-            {
-                TrayMenuItemVersion.Text = "Syncthing " + version.Version;
-            }
+            return version?.Version;
         }
 
         public void Dispose()
