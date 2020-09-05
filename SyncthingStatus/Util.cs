@@ -20,6 +20,16 @@ namespace SyncthingStatus
             });
         }
 
+        public static void OpenFolder(string path)
+        {
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = path,
+                UseShellExecute = true,
+                Verb = "open"
+            });
+        }
+
         public static string GetSyncthingAddress()
         {
             if (Properties.Settings.Default.UsingCustomStAddress)

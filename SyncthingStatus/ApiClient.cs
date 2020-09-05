@@ -64,5 +64,17 @@ namespace SyncthingStatus
                 return null;
             }
         }
+
+        internal static async Task<ConfigResponse> Config()
+        {
+            try
+            {
+                var result = await client.GetFromJsonAsync<ConfigResponse>("/rest/system/config");
+                return result;
+            } catch (HttpRequestException)
+            {
+                return null;
+            }
+        }
     }
 }

@@ -12,6 +12,7 @@ namespace SyncthingStatus
         private ToolStripMenuItem trayMenuItemAbout;
         private ToolStripMenuItem trayMenuItemAbout2;
         private ToolStripMenuItem trayMenuItemOpen;
+        private ToolStripMenuItem trayMenuItemFolders;
         private ToolStripMenuItem trayMenuItemSettings;
         private ToolStripMenuItem trayMenuItemExit;
 
@@ -31,7 +32,8 @@ namespace SyncthingStatus
             statusChecker = new StatusChecker
             {
                 TrayIcon = trayIcon,
-                TrayMenuItemVersion = trayMenuItemAbout2
+                TrayMenuItemVersion = trayMenuItemAbout2,
+                TrayMenuItemFolders = trayMenuItemFolders
             };
 
             settingsForm = new SettingsForm
@@ -45,12 +47,16 @@ namespace SyncthingStatus
             trayMenuItemAbout = new ToolStripMenuItem(Util.GetAboutString()) { Enabled = false };
             trayMenuItemAbout2 = new ToolStripMenuItem("...") { Enabled = false };
             trayMenuItemOpen = new ToolStripMenuItem("Open in browser", null, TrayMenuItemOpenClickHandler);
+            trayMenuItemFolders = new ToolStripMenuItem("Open in explorer");
             trayMenuItemSettings = new ToolStripMenuItem("Settings", null, TrayMenuItemSettingsClickHandler);
             trayMenuItemExit = new ToolStripMenuItem("Exit", null, TrayMenuItemExitClickHandler);
 
+            trayMenuItemFolders.DropDownItems.Add(new ToolStripMenuItem("No folders") { Enabled = false });
+            ((ToolStripDropDownMenu)trayMenuItemFolders.DropDown).ShowImageMargin = false;
+
             trayMenuItems = new ToolStripItem[] 
             {
-                trayMenuItemAbout, trayMenuItemAbout2, new ToolStripSeparator(), trayMenuItemOpen, trayMenuItemSettings, trayMenuItemExit
+                trayMenuItemAbout, trayMenuItemAbout2, new ToolStripSeparator(), trayMenuItemOpen, trayMenuItemFolders, trayMenuItemSettings, trayMenuItemExit
             };
 
             trayMenu = new ContextMenuStrip() { ShowImageMargin = false };

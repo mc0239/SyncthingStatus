@@ -1,5 +1,7 @@
-﻿using System;
+﻿using SyncthingStatus.Data;
+using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
@@ -14,6 +16,7 @@ namespace SyncthingStatus
 
         internal NotifyIcon TrayIcon { get; set; }
         internal ToolStripMenuItem TrayMenuItemVersion { get; set; }
+        internal ToolStripMenuItem TrayMenuItemFolders { get; set; }
 
         public StatusChecker()
         {
@@ -39,7 +42,7 @@ namespace SyncthingStatus
 
         public async Task<bool> CheckAll()
         {
-            if (TrayIcon == null || TrayMenuItemVersion == null)
+            if (TrayIcon == null || TrayMenuItemVersion == null || TrayMenuItemFolders == null)
             {
                 return false; // TODO handle this
             }
@@ -53,6 +56,21 @@ namespace SyncthingStatus
             {
                 TrayIcon.Icon = Properties.Resources.iconNotify;
                 TrayIcon.Text = status != null ? "Syncthing: " + status : null;
+            }
+
+            FolderResponse[] folders = await CheckFolders();
+            // Sort folders by name (Label)
+            Array.Sort(folders, delegate (FolderResponse f1, FolderResponse f2) { return f1.Label.CompareTo(f2.Label); });
+
+            if (folders != null)
+            {
+                TrayMenuItemFolders.DropDownItems.Clear();
+                foreach (FolderResponse folder in folders)
+                {
+                    TrayMenuItemFolders.DropDownItems.Add(new ToolStripMenuItem(folder.Label, null,
+                        (object sender, EventArgs e) => { Util.OpenFolder(folder.Path); })
+                    );
+                }
             }
 
             string version = await CheckVersion();
@@ -88,6 +106,12 @@ namespace SyncthingStatus
         {
             var version = await ApiClient.Version();
             return version?.Version;
+        }
+
+        private async Task<FolderResponse[]> CheckFolders()
+        {
+            var config = await ApiClient.Config();
+            return config?.Folders;
         }
 
         public void Dispose()
