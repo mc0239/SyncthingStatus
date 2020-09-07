@@ -15,8 +15,12 @@ namespace SyncthingStatus
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             
-            // TODO: settings migration between versions.
-            Properties.Settings.Default.Upgrade();
+            if (Properties.Settings.Default.UpgradeRequired)
+            {
+                Properties.Settings.Default.Upgrade();
+                Properties.Settings.Default.UpgradeRequired = false;
+                Properties.Settings.Default.Save();
+            }
 
             ApiClient.Initialize();
             TrayIconContainer trayIconContainer = new TrayIconContainer();
