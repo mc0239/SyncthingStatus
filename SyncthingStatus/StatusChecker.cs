@@ -59,11 +59,11 @@ namespace SyncthingStatus
             }
 
             FolderResponse[] folders = await CheckFolders();
-            // Sort folders by name (Label)
-            Array.Sort(folders, delegate (FolderResponse f1, FolderResponse f2) { return f1.Label.CompareTo(f2.Label); });
-
             if (folders != null)
             {
+                // Sort folders by name (Label)
+                Array.Sort(folders, delegate (FolderResponse f1, FolderResponse f2) { return f1.Label.CompareTo(f2.Label); });
+
                 string tmp = "";
                 foreach (ToolStripDropDownItem item in TrayMenuItemFolders.DropDownItems)
                 {
