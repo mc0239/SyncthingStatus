@@ -46,8 +46,8 @@ namespace SyncthingStatus
         {
             trayMenuItemAbout = new ToolStripMenuItem(Util.GetAboutString()) { Enabled = false };
             trayMenuItemAbout2 = new ToolStripMenuItem("...") { Enabled = false };
-            trayMenuItemOpen = new ToolStripMenuItem("Open in browser", null, TrayMenuItemOpenClickHandler);
-            trayMenuItemFolders = new ToolStripMenuItem("Open in explorer");
+            trayMenuItemOpen = new ToolStripMenuItem("Open Web GUI", null, TrayMenuItemOpenClickHandler);
+            trayMenuItemFolders = new ToolStripMenuItem("Open folder");
             trayMenuItemSettings = new ToolStripMenuItem("Settings", null, TrayMenuItemSettingsClickHandler);
             trayMenuItemExit = new ToolStripMenuItem("Exit", null, TrayMenuItemExitClickHandler);
 

@@ -64,12 +64,26 @@ namespace SyncthingStatus
 
             if (folders != null)
             {
-                TrayMenuItemFolders.DropDownItems.Clear();
-                foreach (FolderResponse folder in folders)
+                string tmp = "";
+                foreach (ToolStripDropDownItem item in TrayMenuItemFolders.DropDownItems)
                 {
-                    TrayMenuItemFolders.DropDownItems.Add(new ToolStripMenuItem(folder.Label, null,
-                        (object sender, EventArgs e) => { Util.OpenFolder(folder.Path); })
-                    );
+                    tmp += ((FolderResponse) item?.Tag)?.Id;
+                }
+
+                int hash1 = folders.Aggregate("", (acc, folder) => acc + folder.Id).GetHashCode();
+                int hash2 = tmp.GetHashCode();
+
+                if (hash1 != hash2)
+                {
+                    TrayMenuItemFolders.DropDownItems.Clear();
+                    foreach (FolderResponse folder in folders)
+                    {
+                        TrayMenuItemFolders.DropDownItems.Add(
+                            new ToolStripMenuItem(folder.Label, null,
+                                (object sender, EventArgs e) => { Util.OpenFolder(folder.Path); })
+                            { Tag = folder }
+                        );
+                    }
                 }
             }
 
