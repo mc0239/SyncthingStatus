@@ -1,5 +1,7 @@
 # SyncthingStatus
 
+Tray menu icon as a quick Syncthing status check & a shortcut to web GUI and opening synced folders in File Explorer.
+
 ## Requirements
 
 - .NET Core 3 Runtime (Windows 10 will automatically prompt you to download it when you try to run SyncthingStatus).
