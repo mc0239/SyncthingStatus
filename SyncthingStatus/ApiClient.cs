@@ -1,4 +1,6 @@
 ﻿using SyncthingStatus.Data;
+using System;
+using System.IO;
 using System.Net.Http;
 using System.Net.Http.Json;
 using System.Threading.Tasks;
@@ -34,7 +36,8 @@ namespace SyncthingStatus
             {
                 var result = await client.GetFromJsonAsync<PingResponse>("/rest/system/ping");
                 return result;
-            } catch(HttpRequestException)
+            }
+            catch (Exception ex) when (ex is HttpRequestException || ex is IOException)
             {
                 return null;
             }
@@ -46,7 +49,8 @@ namespace SyncthingStatus
             {
                 var result = await client.GetFromJsonAsync<VersionResponse>("/rest/system/version");
                 return result;
-            } catch (HttpRequestException)
+            }
+            catch (Exception ex) when (ex is HttpRequestException || ex is IOException)
             {
                 return null;
             }
@@ -59,7 +63,8 @@ namespace SyncthingStatus
                 var errors = new { Errors = new ErrorResponse.Error[0] };
                 var result = await client.GetFromJsonAsync<ErrorResponse>("/rest/system/error");
                 return result.Errors;
-            } catch(HttpRequestException)
+            }
+            catch (Exception ex) when (ex is HttpRequestException || ex is IOException)
             {
                 return null;
             }
@@ -71,7 +76,8 @@ namespace SyncthingStatus
             {
                 var result = await client.GetFromJsonAsync<ConfigResponse>("/rest/system/config");
                 return result;
-            } catch (HttpRequestException)
+            }
+            catch (Exception ex) when (ex is HttpRequestException || ex is IOException)
             {
                 return null;
             }
