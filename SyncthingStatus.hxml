@@ -1,0 +1,14 @@
+-resource assets/default.ico@default.ico
+-resource assets/notify.ico@notify.ico
+-resource assets/sync.ico@sync.ico
+-resource assets/think.ico@think.ico
+
+-cp src
+-main Main
+
+-lib hxWidgets
+
+-D ABI=-MD
+-D WXSTATIC
+
+-cpp build

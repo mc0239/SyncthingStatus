@@ -11,22 +11,22 @@ Then, make sure that Syncthing runs on Windows startup. Syncthing docs have an [
 I prefer to do it with the Startup folder:
 
 1. Open up the *Run...* window (Win + R)
-2. Type in `shell:startup` and click OK. <br> ![](https://raw.githubusercontent.com/mc0239/SyncthingStatus/master/img/run_shell_startup.png)
+2. Type in `shell:startup` and click OK. <br> ![](https://raw.githubusercontent.com/mcebular/SyncthingStatus/master/img/run_shell_startup.png)
 3. An Explorer window will pop up with the Startup folder. Here, do the *Right click* > *New* > *Shortcut*.
-4. When prompted for the location of the item, browse and select `Syncthing.exe`. Before clicking *Next*, add `-no-console -no-browser` to the end (this will make Syncthing run in background, without console window or opening the browser). <br> ![](https://raw.githubusercontent.com/mc0239/SyncthingStatus/master/img/add_shortcut_1.png)
+4. When prompted for the location of the item, browse and select `Syncthing.exe`. Before clicking *Next*, add `-no-console -no-browser` to the end (this will make Syncthing run in background, without console window or opening the browser). <br> ![](https://raw.githubusercontent.com/mcebular/SyncthingStatus/master/img/add_shortcut_1.png)
 5. Complete the shortcut creation process. Congrats, Syncthing will now automatically run when you log in.
 
 ## Setting up SyncthingStatus
 
-Download latest release executable from [GitHub releases](https://github.com/mc0239/SyncthingStatus/releases) (look under Assets).
+Download latest release executable from [GitHub releases](https://github.com/mcebular/SyncthingStatus/releases) (look under Assets).
 
 On first run, you might be prompted by Windows that you need to install .Net Core. Click Yes. A website with download options will pop up.
 
-![](https://raw.githubusercontent.com/mc0239/SyncthingStatus/master/img/net_core_prompt.png)
+![](https://raw.githubusercontent.com/mcebular/SyncthingStatus/master/img/net_core_prompt.png)
 
 On the webpage, look under the *Desktop Runtime* section and download the installer. Run the installer and let it do it's thing.
 
-![](https://raw.githubusercontent.com/mc0239/SyncthingStatus/master/img/net_core_download.png).
+![](https://raw.githubusercontent.com/mcebular/SyncthingStatus/master/img/net_core_download.png).
 
 The steps to make SyncthingStatus run on startup are practically the same as for the Syncthing itself (create a shortcut in the Startup folder, see instructions above).
 
