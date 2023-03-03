@@ -12,4 +12,3 @@
 -D WXSTATIC
 
 -cpp build
--cmd mv build/Main build/SyncthingStatus
