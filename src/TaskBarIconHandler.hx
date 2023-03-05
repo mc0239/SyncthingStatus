@@ -5,6 +5,7 @@ import Util.openFolder;
 import Util.openUrl;
 import data.FoldersResponse.Folder;
 import haxe.ds.ArraySort;
+import hx.AppTaskBarIconWrapper;
 import hx.widgets.*;
 
 enum TaskBarIconState {
@@ -27,7 +28,7 @@ class TaskBarIconHandler {
     private final settingsFrame: Frame;
     private final config: AppConfigHandler;
 
-    private var icon: TaskBarIcon;
+    private var icon: AppTaskBarIconWrapper;
 
     private var menu: Menu;
     private var submenuFolders: Menu;
@@ -48,7 +49,7 @@ class TaskBarIconHandler {
     }
 
     private function init() {
-        icon = new TaskBarIcon();
+        icon = new AppTaskBarIconWrapper();
         setState(Unknown);
         initMenu();
         initEventHandlers();
@@ -56,6 +57,7 @@ class TaskBarIconHandler {
 
     private function initMenu() {
         menu = new Menu();
+        icon.setPopupMenu(menu);
 
         menuItemAbout = new MenuItem(menu, getAboutString());
         menuItemAbout2 = new MenuItem(menu, "Syncthing ...");
@@ -79,10 +81,6 @@ class TaskBarIconHandler {
 
     private function initEventHandlers() {
         // event bindings for icon
-        icon.bind(EventType.TASKBAR_CLICK, (event) -> {
-            settingsFrame.popupMenu(menu);
-        });
-
         icon.bind(EventType.TASKBAR_LEFT_DCLICK, (event) -> {
             openUrl(config.getSyncthingAddress());
         });
@@ -103,6 +101,7 @@ class TaskBarIconHandler {
         menu.bind(EventType.MENU, (e) -> {
             e.skip(false);
             trace("Exiting...");
+            icon.removeIcon();
             app.exit(); // TODO segfault (but does it matter at this point?)
         }, StandardId.EXIT);
 

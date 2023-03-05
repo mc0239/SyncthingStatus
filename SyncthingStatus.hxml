@@ -3,12 +3,12 @@
 -resource assets/sync.ico@sync.ico
 -resource assets/think.ico@think.ico
 
--cp src
--main Main
-
 -lib hxWidgets
 
 -D ABI=-MD
 -D WXSTATIC
+
+-cp src
+-main Main
 
 -cpp build
