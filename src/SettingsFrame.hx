@@ -1,5 +1,8 @@
 package ;
 
+import hx.widgets.styles.BackgroundStyle;
+import hx.widgets.styles.FrameStyle;
+import hx.widgets.styles.WindowStyle;
 import Util.getAboutString;
 import hx.widgets.*;
 import hx.widgets.styles.HyperlinkCtrlStyle;
@@ -25,6 +28,13 @@ class SettingsFrame extends Frame {
     }
 
     private function initUi() {
+        // TODO as per wxFrame docs setting background may be unnecessary by using wxPanel
+        //      as frame child and containing the controls in the panel instead...
+        var platform:PlatformInfo  = new PlatformInfo();
+        if (platform.isWindows) {
+            this.backgroundColour = 0xFFFFFF;
+        }
+
         var sizer = new BoxSizer(Orientation.VERTICAL);
 
         var labelApiKey = new StaticText(this, "API Key");
@@ -59,7 +69,7 @@ class SettingsFrame extends Frame {
         sizer.add(labelAbout, 0, Direction.LEFT | Direction.RIGHT | Defs.ALIGN_RIGHT, 10);
 
         var labelHomepage = new HyperlinkCtrl(this, "GitHub page", "https://github.com/mcebular/SyncthingStatus", HyperlinkCtrlStyle.ALIGN_LEFT | HyperlinkCtrlStyle.CONTEXTMENU);
-        sizer.add(labelHomepage, 0, Direction.LEFT | Direction.RIGHT | Defs.ALIGN_RIGHT, 10);
+        sizer.add(labelHomepage, 0, Direction.LEFT | Direction.RIGHT | Direction.DOWN | Defs.ALIGN_RIGHT, 10);
 
         this.setSizerAndFit(sizer);
         this.resize(400, 200);
