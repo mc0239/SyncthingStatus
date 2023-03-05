@@ -1,4 +1,4 @@
-package wx;
+package ext;
 
 import cpp.Pointer;
 import cpp.RawPointer;
@@ -16,10 +16,10 @@ import wx.widgets.TaskBarIcon;
 @:native("AppTaskBarIcon")
 @:structAccess
 
-extern class AppTaskBarIconNative extends TaskBarIcon {
+extern class AppTaskBarIcon extends TaskBarIcon {
     @:native("new AppTaskBarIcon")
-    private static function _new():RawPointer<AppTaskBarIconNative>;
-    public static inline function createInstance():Pointer<AppTaskBarIconNative> {
+    private static function _new():RawPointer<AppTaskBarIcon>;
+    public static inline function createInstance():Pointer<AppTaskBarIcon> {
         return Pointer.fromRaw(_new());
     }
 

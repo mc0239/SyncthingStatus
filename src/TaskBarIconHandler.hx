@@ -4,8 +4,8 @@ import Util.getAboutString;
 import Util.openFolder;
 import Util.openUrl;
 import data.FoldersResponse.Folder;
+import ext.AppTaskBarIconW;
 import haxe.ds.ArraySort;
-import hx.AppTaskBarIconWrapper;
 import hx.widgets.*;
 
 enum TaskBarIconState {
@@ -28,7 +28,7 @@ class TaskBarIconHandler {
     private final settingsFrame: Frame;
     private final config: AppConfigHandler;
 
-    private var icon: AppTaskBarIconWrapper;
+    private var icon: AppTaskBarIconW;
 
     private var menu: Menu;
     private var submenuFolders: Menu;
@@ -49,7 +49,7 @@ class TaskBarIconHandler {
     }
 
     private function init() {
-        icon = new AppTaskBarIconWrapper();
+        icon = new AppTaskBarIconW();
         setState(Unknown);
         initMenu();
         initEventHandlers();
