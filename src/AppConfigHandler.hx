@@ -1,11 +1,11 @@
 package ;
 
-import hx.widgets.AppTraits;
 import haxe.Json;
-import sys.io.File;
 import haxe.io.Path;
-import sys.FileSystem;
+import hx.widgets.PlatformInfo;
 import hx.widgets.StandardPaths;
+import sys.FileSystem;
+import sys.io.File;
 
 
 typedef AppSettings = {
@@ -29,7 +29,15 @@ class AppConfigHandler {
     private var configuration: AppSettings = null;
 
     public function new() {
-        this.dataDirPath = Path.join([new StandardPaths().userLocalDataDir]);
+        var platform:PlatformInfo  = new PlatformInfo();
+        if (platform.isWindows) {
+            // Expected to be: C:\Users\<username>\AppData\Local\<appinfo>
+            this.dataDirPath = Path.join([new StandardPaths().userLocalDataDir]);
+        } else {
+            // Expected to be: value of $XDG_CONFIG_HOME/<appinfo>, usually $HOME/.config/<appinfo>
+            this.dataDirPath = Path.join([new StandardPaths().userConfigDir, Main.APP_NAME]);
+        }
+
         this.configFilePath = Path.join([dataDirPath, "config.json"]);
     }
 

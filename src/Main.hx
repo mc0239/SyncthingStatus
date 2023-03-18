@@ -2,9 +2,8 @@ package ;
 
 import Util.getAboutString;
 import hx.widgets.*;
-import hx.widgets.styles.HyperlinkCtrlStyle;
+import hx.widgets.StandardPaths.FileLayout;
 import hx.widgets.styles.MessageDialogStyle;
-import wx.widgets.Direction;
 
 
 class Main {
@@ -17,6 +16,8 @@ class Main {
         var app = new App();
         app.init();
         app.name = APP_NAME;
+
+        new StandardPaths().fileLayout = FileLayout.FileLayout_XDG;
 
         var configHandler = new AppConfigHandler();
         var settingsFrame:SettingsFrame = new SettingsFrame(null, configHandler);
