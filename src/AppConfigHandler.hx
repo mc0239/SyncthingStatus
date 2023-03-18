@@ -22,7 +22,6 @@ class AppConfigHandler {
         usingCustomStAddress: false
     }
 
-    // TODO maybe I should do setFileLayout(XDG), see wxWidgets documentation.
     private final dataDirPath: String;
     private final configFilePath: String;
 
