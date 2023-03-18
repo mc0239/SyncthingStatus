@@ -75,7 +75,7 @@ class AppConfigHandler {
     }
 
     public function save(config: AppSettings): Void {
-        File.saveContent(configFilePath, Json.stringify(config));
+        File.saveContent(configFilePath, Json.stringify(config, "  "));
         this.configuration = config;
     }
 
