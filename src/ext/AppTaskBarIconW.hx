@@ -16,11 +16,11 @@ class AppTaskBarIconW extends TaskBarIcon {
     }
 
     public function setPopupMenu(menu: Menu): Void {
-        coolRef.ptr.setPopupMenu(menu.menuRef);
+        appTaskBarIconRef.ptr.setPopupMenu(menu.menuRef);
     }
 
-    private var coolRef(get, null):Pointer<AppTaskBarIcon>;
-    private function get_coolRef():Pointer<AppTaskBarIcon> {
+    private var appTaskBarIconRef(get, null):Pointer<AppTaskBarIcon>;
+    private function get_appTaskBarIconRef():Pointer<AppTaskBarIcon> {
        return _ref.reinterpret();
     }
 }
