@@ -28,51 +28,45 @@ class SettingsFrame extends Frame {
     }
 
     private function initUi() {
-        // TODO as per wxFrame docs setting background may be unnecessary by using wxPanel
-        //      as frame child and containing the controls in the panel instead...
-        var platform:PlatformInfo  = new PlatformInfo();
-        if (platform.isWindows) {
-            this.backgroundColour = 0xFFFFFF;
-        }
+        var panel:Panel = new Panel(this);
 
         var sizer = new BoxSizer(Orientation.VERTICAL);
 
-        var labelApiKey = new StaticText(this, "API Key");
+        var labelApiKey = new StaticText(panel, "API Key");
         sizer.add(labelApiKey, 0, Direction.TOP | Direction.LEFT | Direction.RIGHT, 10);
 
         sizer.addSpacer(2);
 
-        var inputApiKey = new TextCtrl(this, config.getConfig().apiKey);
+        var inputApiKey = new TextCtrl(panel, config.getConfig().apiKey);
         sizer.add(inputApiKey, 0, Stretch.EXPAND | Direction.LEFT | Direction.RIGHT, 10);
 
         sizer.addSpacer(14);
 
-        var checkBoxCustomStAddress = new CheckBox(this, "Use custom Syncthing address");
+        var checkBoxCustomStAddress = new CheckBox(panel, "Use custom Syncthing address");
         checkBoxCustomStAddress.value = config.getConfig().usingCustomStAddress;
         sizer.add(checkBoxCustomStAddress, 0, Direction.LEFT | Direction.RIGHT, 10);
 
         sizer.addSpacer(2);
         
-        var inputStAddress = new TextCtrl(this, config.getConfig().stAddress);
+        var inputStAddress = new TextCtrl(panel, config.getConfig().stAddress);
         inputStAddress.hint = "http://localhost:8384";
         inputStAddress.enabled = checkBoxCustomStAddress.value;
         sizer.add(inputStAddress, 0, Stretch.EXPAND | Direction.LEFT | Direction.RIGHT, 10);
 
         sizer.addSpacer(14);
 
-        var buttonSave = new Button(this, "Save settings");
+        var buttonSave = new Button(panel, "Save settings");
         sizer.add(buttonSave, 0, Direction.LEFT | Direction.RIGHT | Defs.ALIGN_RIGHT, 10);
 
         sizer.addSpacer(28);
 
-        var labelAbout = new StaticText(this, getAboutString());
+        var labelAbout = new StaticText(panel, getAboutString());
         sizer.add(labelAbout, 0, Direction.LEFT | Direction.RIGHT | Defs.ALIGN_RIGHT, 10);
 
-        var labelHomepage = new HyperlinkCtrl(this, "GitHub page", "https://github.com/mcebular/SyncthingStatus", HyperlinkCtrlStyle.ALIGN_LEFT | HyperlinkCtrlStyle.CONTEXTMENU);
+        var labelHomepage = new HyperlinkCtrl(panel, "GitHub page", "https://github.com/mcebular/SyncthingStatus", HyperlinkCtrlStyle.ALIGN_LEFT | HyperlinkCtrlStyle.CONTEXTMENU);
         sizer.add(labelHomepage, 0, Direction.LEFT | Direction.RIGHT | Direction.DOWN | Defs.ALIGN_RIGHT, 10);
 
-        this.setSizerAndFit(sizer);
-        this.resize(400, 200);
+        panel.setSizerAndFit(sizer);
 
         // event bindings
 
