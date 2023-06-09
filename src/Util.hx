@@ -11,7 +11,6 @@ function openUrl(url: String): Void {
             Sys.command("xdg-open", [url]);
         }
         case "Windows": {
-            // TODO verify that this works
             Sys.command("start", [url]);
         }
         default: {
@@ -26,7 +25,6 @@ function openFolder(path: String): Void {
             Sys.command("xdg-open", [path]);
         }
         case "Windows": {
-            // TODO verify that this works
             Sys.command("start", [path]);
         }
         default: {
