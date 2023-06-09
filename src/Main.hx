@@ -9,7 +9,7 @@ import hx.widgets.styles.MessageDialogStyle;
 class Main {
 
     public static final APP_NAME = "SyncthingStatus";
-    public static final APP_VERSION = "v0.5";
+    public static final APP_VERSION = "v2.0-rc.1";
 
     public static function main() {
         trace(getAboutString());
