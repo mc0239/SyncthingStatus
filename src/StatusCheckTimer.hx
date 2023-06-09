@@ -41,12 +41,15 @@ class StatusCheckTimer {
                 iconHandler.setVersion(data.version);
 
                 client.error((data) -> {
-                    if (data.errors != null && data.errors.length > 0) {
+                    var hasErrors = data.errors != null && data.errors.length > 0;
+                    if (hasErrors) {
                         iconHandler.setState(HasErrors);
                     }
 
                     client.folders((data) -> {
-                        iconHandler.setState(Ok);
+                        if (!hasErrors) {
+                            iconHandler.setState(Ok);
+                        }
                         iconHandler.setFolders(data);
                     }, handleAsBadResponse);
 

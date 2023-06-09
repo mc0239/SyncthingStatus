@@ -2,21 +2,22 @@ package ;
 
 import Util.getAboutString;
 import hx.widgets.*;
-import hx.widgets.styles.HyperlinkCtrlStyle;
+import hx.widgets.StandardPaths.FileLayout;
 import hx.widgets.styles.MessageDialogStyle;
-import wx.widgets.Direction;
 
 
 class Main {
 
     public static final APP_NAME = "SyncthingStatus";
-    public static final APP_VERSION = "v1.0";
+    public static final APP_VERSION = "v0.5";
 
     public static function main() {
         trace(getAboutString());
         var app = new App();
         app.init();
         app.name = APP_NAME;
+
+        new StandardPaths().fileLayout = FileLayout.FileLayout_XDG;
 
         var configHandler = new AppConfigHandler();
         var settingsFrame:SettingsFrame = new SettingsFrame(null, configHandler);
