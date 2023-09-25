@@ -17,7 +17,7 @@ class Main {
         app.init();
         app.name = APP_NAME;
 
-        new StandardPaths().fileLayout = FileLayout.FileLayout_XDG;
+        new StandardPaths().fileLayout = FileLayout.XDG;
 
         var configHandler = new AppConfigHandler();
         var settingsFrame:SettingsFrame = new SettingsFrame(null, configHandler);
@@ -26,7 +26,7 @@ class Main {
             configHandler.init();
             settingsFrame.init();
         } catch (exception) {
-            MessageDialog.showMessageBox("An exception occured when starting Syncthing Status:\n" + exception.message, APP_NAME + " could not start", MessageDialogStyle.OK | MessageDialogStyle.ICON_EXCLAMATION, settingsFrame);
+            MessageDialog.messageBox("An exception occured when starting Syncthing Status:\n" + exception.message, APP_NAME + " could not start", MessageDialogStyle.OK | MessageDialogStyle.ICON_EXCLAMATION, settingsFrame);
             return;
         }
 
