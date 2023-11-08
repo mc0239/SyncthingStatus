@@ -19,15 +19,10 @@ enum TaskBarIconState {
 
 class TaskBarIconHandler {
 
-    private final defaultBitmap = BitmapBundle.fromHaxeResource("default.ico");
-    private final notifyBitmap = BitmapBundle.fromHaxeResource("notify.ico");
-    // private final syncBitmap = BitmapBundle.fromHaxeResource("sync.ico");
-    // private final thinkBitmap = BitmapBundle.fromHaxeResource("think.ico");
-
-    // private final defaultBitmap = BitmapBundle.fromIconBundle(IconBundle.fromHaxeResource("default.ico"));
-    // private final notifyBitmap = BitmapBundle.fromIconBundle(IconBundle.fromHaxeResource("notify.ico"));
-    // private final syncBitmap = Bitmap.fromHaxeResource("sync.ico");
-    private final thinkBitmap = IconBundle.fromHaxeResource("think.ico");
+    private final defaultBitmap = BitmapBundle.fromIconBundle(IconBundle.fromHaxeResource("default.ico"));
+    private final notifyBitmap = BitmapBundle.fromIconBundle(IconBundle.fromHaxeResource("notify.ico"));
+    private final syncBitmap = BitmapBundle.fromIconBundle(IconBundle.fromHaxeResource("sync.ico"));
+    private final thinkBitmap = BitmapBundle.fromIconBundle(IconBundle.fromHaxeResource("think.ico"));
 
     private final app: App;
     private final settingsFrame: Frame;
@@ -125,13 +120,13 @@ class TaskBarIconHandler {
     public function setState(state: TaskBarIconState) {
         switch (state) {
             case Unknown: {
-                icon.setBitmapBundle(BitmapBundle.fromIconBundle(IconBundle.fromHaxeResource("think.ico")), "Syncthing: ...");
+                icon.setBitmapBundle(thinkBitmap, "Syncthing: ...");
             }
             case Ok: {
                 icon.setBitmapBundle(defaultBitmap, "Syncthing: OK");
             }
             case NoResponse: {
-                icon.setBitmapBundle(BitmapBundle.fromIconBundle(IconBundle.fromHaxeResource("think.ico")), "Syncthing: No response");
+                icon.setBitmapBundle(thinkBitmap, "Syncthing: No response");
             }
             case BadResponse: {
                 icon.setBitmapBundle(notifyBitmap, "Syncthing: Bad response");
