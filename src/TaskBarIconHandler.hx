@@ -19,10 +19,15 @@ enum TaskBarIconState {
 
 class TaskBarIconHandler {
 
-    private final defaultBitmap = Bitmap.fromHaxeResource("default.ico");
-    private final notifyBitmap = Bitmap.fromHaxeResource("notify.ico");
+    private final defaultBitmap = BitmapBundle.fromHaxeResource("default.ico");
+    private final notifyBitmap = BitmapBundle.fromHaxeResource("notify.ico");
+    // private final syncBitmap = BitmapBundle.fromHaxeResource("sync.ico");
+    // private final thinkBitmap = BitmapBundle.fromHaxeResource("think.ico");
+
+    // private final defaultBitmap = BitmapBundle.fromIconBundle(IconBundle.fromHaxeResource("default.ico"));
+    // private final notifyBitmap = BitmapBundle.fromIconBundle(IconBundle.fromHaxeResource("notify.ico"));
     // private final syncBitmap = Bitmap.fromHaxeResource("sync.ico");
-    private final thinkBitmap = Bitmap.fromHaxeResource("think.ico");
+    private final thinkBitmap = IconBundle.fromHaxeResource("think.ico");
 
     private final app: App;
     private final settingsFrame: Frame;
@@ -120,19 +125,19 @@ class TaskBarIconHandler {
     public function setState(state: TaskBarIconState) {
         switch (state) {
             case Unknown: {
-                icon.setBitmap(thinkBitmap, "Syncthing: ...");
+                icon.setBitmapBundle(BitmapBundle.fromIconBundle(IconBundle.fromHaxeResource("think.ico")), "Syncthing: ...");
             }
             case Ok: {
-                icon.setBitmap(defaultBitmap, "Syncthing: OK");
+                icon.setBitmapBundle(defaultBitmap, "Syncthing: OK");
             }
             case NoResponse: {
-                icon.setBitmap(thinkBitmap, "Syncthing: No response");
+                icon.setBitmapBundle(BitmapBundle.fromIconBundle(IconBundle.fromHaxeResource("think.ico")), "Syncthing: No response");
             }
             case BadResponse: {
-                icon.setBitmap(notifyBitmap, "Syncthing: Bad response");
+                icon.setBitmapBundle(notifyBitmap, "Syncthing: Bad response");
             }
             case HasErrors: {
-                icon.setBitmap(notifyBitmap, "Syncthing: Reporting errors");
+                icon.setBitmapBundle(notifyBitmap, "Syncthing: Reporting errors");
             }
         }
     }
