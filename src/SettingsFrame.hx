@@ -1,8 +1,5 @@
 package ;
 
-import hx.widgets.styles.BackgroundStyle;
-import hx.widgets.styles.FrameStyle;
-import hx.widgets.styles.WindowStyle;
 import Util.getAboutString;
 import hx.widgets.*;
 import hx.widgets.styles.HyperlinkCtrlStyle;
@@ -19,6 +16,7 @@ class SettingsFrame extends Frame {
 
     public function init() {
         initUi();
+        trace("DPIScaleFactor=" + this.DPIScaleFactor);
 
         // When clicking X to close window, don't actually close it, just hide it.
         this.bind(EventType.CLOSE_WINDOW, (event: Event) -> {

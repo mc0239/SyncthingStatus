@@ -1,5 +1,9 @@
 <xml>
-    <files id='haxe'>
-        <compilerflag value="-I/../includes/" />
-    </files>
+    <section if="windows">
+        <target id="haxe" tool="linker" toolid="exe">
+            <section if="WXSTATIC">
+                <flag value="/MANIFESTINPUT:${this_dir}/src/manifest.xml" />
+            </section>
+        </target>
+    </section>
 </xml>

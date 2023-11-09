@@ -6,6 +6,7 @@ import hx.widgets.StandardPaths.FileLayout;
 import hx.widgets.styles.MessageDialogStyle;
 
 
+@:buildXml('<include name="../Build.xml" />')
 class Main {
 
     public static final APP_NAME = "SyncthingStatus";
